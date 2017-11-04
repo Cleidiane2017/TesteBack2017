@@ -1,0 +1,76 @@
+# TesteBack2017
+Codigo da aplicacao 
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package testeback2017;
+
+/**
+ *
+ * @author Cleidiane
+ */
+public class Cliente {
+    private int id_cliente;
+    private String cpf_cnpj;
+    private String nm_cliente;
+    private char situacao;
+    private double vl_total;
+
+    public Cliente(int id_cliente, String cpf_cnpj, String nm_cliente, char situacao, double vl_total) {
+        this.id_cliente = id_cliente;
+        this.cpf_cnpj = cpf_cnpj;
+        this.nm_cliente = nm_cliente;
+        this.situacao = situacao;
+        this.vl_total = vl_total;
+    }
+
+    
+    
+    
+    
+    public int getId_cliente() {
+        return id_cliente;
+    }
+
+    public void setId_cliente(int id_cliente) {
+        this.id_cliente = id_cliente;
+    }
+
+    public String getCpf_cnpj() {
+        return cpf_cnpj;
+    }
+
+    public void setCpf_cnpj(String cpf_cnpj) {
+        this.cpf_cnpj = cpf_cnpj;
+    }
+
+    public String getNm_cliente() {
+        return nm_cliente;
+    }
+
+    public void setNm_cliente(String nm_cliente) {
+        this.nm_cliente = nm_cliente;
+    }
+
+    public char getSituacao() {
+        return situacao;
+    }
+
+    public void setSituacao(char situacao) {
+        this.situacao = situacao;
+    }
+
+    public double getVl_total() {
+        return vl_total;
+    }
+
+    public void setVl_total(double vl_total) {
+        this.vl_total = vl_total;
+    }
+
+    
+    
+    
+}
