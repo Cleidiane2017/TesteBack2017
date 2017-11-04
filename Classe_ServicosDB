@@ -1,0 +1,75 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package testeback2017;
+
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+/**
+ *
+ * @author Cleidiane
+ */
+public class ServicosDB {
+    private Connection conexao;
+    
+    public static String Servidor = "CLEIDIANE\\MSSQLSERVER1";
+    public static String BancoDados = "Casa";
+    public static String Usuario = "sa";
+    public static String Senha = "032394";
+    public String porta= "1433";
+    
+    public static String Driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    
+    public ServicosDB() {
+        try {
+            String connectionUrl = "jdbc:sqlserver://" + Servidor + ":" +porta+";"+
+                    "databaseName=" + BancoDados + ";integratedSecurity=false;user=" + Usuario + ";password=" + Senha +";";
+            
+            Class.forName(Driver).newInstance();   
+            conexao = DriverManager.getConnection(connectionUrl);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(ServicosDB.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (InstantiationException ex) {
+            Logger.getLogger(ServicosDB.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalAccessException ex) {
+            Logger.getLogger(ServicosDB.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(ServicosDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
+    public int ExecSQL(String comando) {        
+        try {
+            Statement s = conexao.createStatement();
+            int r = s.executeUpdate(comando);
+            s.close();
+            
+            return r;
+        } catch (SQLException ex) {
+            Logger.getLogger(ServicosDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return -1;
+    }
+    
+    public ResultSet ConsultaSQL(String comando) {
+        try {
+            Statement s = conexao.createStatement();
+            s.execute(comando);
+            
+            ResultSet rs = s.getResultSet();
+            
+            return rs;
+        } catch (SQLException ex) {
+            Logger.getLogger(ServicosDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
+}
