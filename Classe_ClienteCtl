@@ -1,0 +1,116 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package testeback2017;
+
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
+
+/**
+ *
+ * @author Cleidiane
+ */
+public class ClienteCtl {
+    
+    
+    
+    
+    public void IncluirCliente(Cliente c) {
+        int id_cliente = -1;
+        
+        String sql = "insert into  tb_customer_account values('" +
+                        c.getId_cliente() + "', '" +
+                        c.getCpf_cnpj() + "', '" +
+                        c.getNm_cliente() + "', '" +
+                        c.getSituacao() + "', '" +
+                        c.getVl_total() + "')";
+                        
+        
+        ServicosDB db = new ServicosDB();
+        if (db.ExecSQL(sql) > 0) {
+            sql = "select @@identity as id";
+            ResultSet rs = db.ConsultaSQL(sql);
+            
+            try {
+                if (rs.next()) {
+                    id_cliente = rs.getInt("id");
+                    c.setId_cliente(id_cliente);
+                }
+                
+                rs.close();                                
+            } catch (SQLException ex) {
+                Logger.getLogger(ClienteCtl.class.getName()).log(Level.SEVERE, null, ex);
+            }            
+        }
+        
+      
+    }
+    
+    
+    
+    public void retornaMedia(){
+       
+        Cliente c=null;
+        
+        String sql="select avg(vl_total) as 'Media' from tb_customer_account where vl_total>560 and id_customer between 1500 and 2700 ";
+        ServicosDB db=new ServicosDB();
+        double media = 0;
+        
+          try {
+            ResultSet rs = db.ConsultaSQL(sql);
+            if (rs.next()) { 
+                media=(rs.getDouble("Media"));  
+                
+            }            
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteCtl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        System.out.println("Media final dos clientes: "+media);
+       
+    }
+    
+    
+    
+    
+    public void imprimirCliente() {
+        Cliente c = null;
+        
+        String sql = "select *from tb_customer_account where vl_total>560 and id_customer between 1500 and 2700   order by  vl_total desc";
+        ServicosDB db = new ServicosDB();
+                
+        try {
+            ResultSet rs = db.ConsultaSQL(sql);
+            System.out.println("***********Clientes do calculo da media************");
+            while (rs.next()) {
+                
+                
+               System.out.println("id do cliente: "+rs.getInt("id_customer")+"\nCPF ou CNPJ: "+rs.getString("cpf_cnpj")+"\nnome: "+rs.getString("nm_customer")+"\nAtivo?: "+rs.getString("is_active")+"\nValor total: "+rs.getDouble("vl_total"));
+               System.out.println("*************************************");
+            }            
+            rs.close();
+        } catch (SQLException ex) {
+            Logger.getLogger(ClienteCtl.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+}
