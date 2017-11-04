@@ -1,0 +1,6 @@
+create table  tb_customer_account(
+id_customer int primary key,
+cpf_cnpj varchar(25) not null,
+nm_customer varchar(50) not null,
+is_active char(1) not null,
+vl_total numeric(8,2) not null)
